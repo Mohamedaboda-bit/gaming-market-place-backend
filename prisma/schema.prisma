@@ -1,0 +1,477 @@
+// datasource block to define the database connection
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// generator block to define the Prisma client
+generator client {
+  provider = "prisma-client-js"
+}
+
+// ENUM Definitions
+enum RoleEnum {
+  admin
+  moderator
+  freelancer
+  client
+  support
+}
+
+enum VerificationStatusEnum {
+  pending
+  completed
+  rejected
+}
+
+enum PaymentTypeEnum {
+ escrow_fund
+ escrow_release
+ deposit
+ withdrawal
+ payout
+}
+
+enum PaymentMethodEnum {
+ credit_card
+ wallet
+ bank_transfer
+}
+
+enum PaymentStatusEnum {
+  pending
+  completed
+  failed
+  refunded
+}
+
+enum EscrowStatusEnum {
+  pending
+  funded
+  released
+  refunded
+}
+
+enum ProjectTypeEnum {
+  new_game
+  edit_game
+}
+
+enum ProjectStatusEnum {
+  pending
+  completed
+  rejected
+  assigned
+  canceled
+  withdrawned
+}
+
+enum ProjectModeratorStatusEnum {
+  active
+  removed
+}
+
+enum ProposalStatusEnum {
+  pending
+  accepted
+  rejected
+  withdrawn
+}
+
+enum PhaseNumberEnum {
+  one
+  two
+  three
+  four
+}
+
+enum ProjectFreelancerStatusEnum {
+  applied
+  in_progress
+  completed
+}
+
+enum RatingEnum {
+  one
+  two
+  three
+  four
+  five
+}
+
+enum ConversationRoleEnum {
+  client
+  freelancer
+  moderator
+}
+
+enum WalletTransactionTypeEnum {
+  deposit
+  withdrawal
+  escrow_fund
+  escrow_release
+  cancelation
+}
+
+enum WalletDirectionEnum {
+  credit
+  debit
+}
+
+enum NotificationTypeEnum {
+  proposal_accepted
+  proposal_rejected
+  new_message
+  escrow_funded
+  escrow_released
+  payment_received
+  project_assigned
+  verification_status
+  admin_message
+}
+
+enum PaymentProviderEnum {
+  stripe
+  paypal
+}
+
+enum PaymentMethodStatusEnum {
+  pending
+  rejected
+  accepted
+}
+
+// Model Definitions
+model users {
+  id            BigInt           @id @default(autoincrement())
+  first_name    String
+  last_name     String
+  phone_number  String
+  email         String
+  remember_token String?
+  role          RoleEnum
+  password      String
+  created_at    DateTime         @default(now())
+  updated_at    DateTime         @default(now())
+  Freelancer_profile Freelancer_profile[]
+  user_verifications user_verifications[]
+  wallets       wallets[]
+  payments_payer payments[]      @relation("payer")
+  payments_payee payments[]      @relation("payee")
+  client_profile client_profile[]
+  project       project[]       @relation("client")
+  project_moderators project_moderators[]
+  conversation_participants conversation_participants[]
+  messages      messages[]
+  notifications notifications[]
+  user_payment_methods user_payment_methods[]
+}
+
+model Freelancer_profile {
+  id            BigInt           @id @default(autoincrement())
+  bio           String?
+  avatar_url    String?
+  available     Boolean
+  location      String?
+  website_url   String?
+  experience_years Int?
+  user_id       BigInt
+  user          users            @relation(fields: [user_id], references: [id])
+  freelancer_experienced_gaming_engines freelancer_experienced_gaming_engines[]
+  freelancer_skill freelancer_skill[]
+  social_links  social_links[]
+  escrows       escrows[]
+  proposals     proposals[]
+  Project_freelancer Project_freelancer[]
+  freelancer_stats freelancer_stats[]
+}
+
+model gaming_engines {
+  id            Int              @id @default(autoincrement())
+  engine_name   String
+  freelancer_experienced_gaming_engines freelancer_experienced_gaming_engines[]
+  project_game_engines project_game_engines[]
+}
+
+model freelancer_experienced_gaming_engines {
+  freelancer_id BigInt
+  engine_id     Int              @id
+  freelancer    Freelancer_profile @relation(fields: [freelancer_id], references: [id])
+  engine        gaming_engines   @relation(fields: [engine_id], references: [id])
+}
+
+model skills {
+  id            Int              @id @default(autoincrement())
+  name          String
+  freelancer_skill freelancer_skill[]
+  project_skills project_skills[]
+}
+
+model freelancer_skill {
+  freelancer_profile_id BigInt
+  skill_id      Int
+  freelancer    Freelancer_profile @relation(fields: [freelancer_profile_id], references: [id])
+  skill         skills           @relation(fields: [skill_id], references: [id])
+  @@id([freelancer_profile_id, skill_id])
+}
+
+model social_links {
+  id            BigInt           @id @default(autoincrement())
+  freelancer_profile_id BigInt
+  platform      String?
+  url           String
+  created_at    DateTime         @default(now())
+  freelancer    Freelancer_profile @relation(fields: [freelancer_profile_id], references: [id])
+}
+
+model user_verifications {
+  id            BigInt           @id @default(autoincrement())
+  verification_request_at DateTime @default(now())
+  is_phone_verified Boolean
+  selfie_image_url String?
+  document_image_url String?
+  is_document_verified Boolean
+  verification_status VerificationStatusEnum
+  verification_completed_at DateTime? @default(now())
+  user_id       BigInt
+  user          users            @relation(fields: [user_id], references: [id])
+}
+
+model wallets {
+  id            BigInt           @id @default(autoincrement())
+  currency      String
+  balance       Decimal          @db.Decimal(18, 2)
+  updated_at    DateTime         @default(now())
+  created_at    DateTime         @default(now())
+  user_id       BigInt
+  user          users            @relation(fields: [user_id], references: [id])
+  wallet_transactions wallet_transactions[]
+}
+
+model payments {
+  id            BigInt           @id @default(autoincrement())
+  payer_id      BigInt
+  payee_id      BigInt
+  type          PaymentTypeEnum
+  method        PaymentMethodEnum
+  processed_at  DateTime?        @default(now())
+  amount        Decimal?         @db.Decimal(8, 2)
+  platform_fee  Decimal?         @db.Decimal(8, 2)
+  transaction_id BigInt?
+  created_at    DateTime         @default(now())
+  status        PaymentStatusEnum
+  payer         users            @relation("payer", fields: [payer_id], references: [id])
+  payee         users            @relation("payee", fields: [payee_id], references: [id])
+}
+
+model client_profile {
+  id            BigInt           @id @default(autoincrement())
+  company_name  String?
+  website_url   String?
+  about         String?
+  avatar_url    String?
+  location      String?
+  user_id       BigInt?
+  user          users?           @relation(fields: [user_id], references: [id])
+  escrows       escrows[]
+}
+
+model escrows {
+  id            BigInt           @id @default(autoincrement())
+  status        EscrowStatusEnum
+  project_id    BigInt
+  amount        Decimal          @db.Decimal(8, 2)
+  freelancer_id BigInt
+  client_id     BigInt
+  funded_at     DateTime         @default(now())
+  released_at   DateTime         @default(now())
+  updated_at    DateTime         @default(now())
+  created_at    DateTime         @default(now())
+  project       project          @relation(fields: [project_id], references: [id])
+  freelancer    Freelancer_profile @relation(fields: [freelancer_id], references: [id])
+  client        client_profile   @relation(fields: [client_id], references: [id])
+}
+
+model project {
+  id            BigInt           @id @default(autoincrement())
+  description   String
+  title         String
+  budget        Int
+  type          ProjectTypeEnum
+  expected_duration Int
+  status        ProjectStatusEnum
+  updated_at    DateTime         @default(now())
+  created_at    DateTime         @default(now())
+  is_moderated  Boolean
+  client_id     BigInt
+  platform      String
+  number_of_phases Int        @default(1)
+  client        users            @relation("client", fields: [client_id], references: [id])
+  project_skills project_skills[]
+  project_game_engines project_game_engines[]
+  project_moderators project_moderators[]
+  escrows       escrows[]
+  proposals     proposals[]
+  Project_freelancer Project_freelancer[]
+  conversations conversations[]
+}
+
+model project_skills {
+  skill_id      Int
+  project_id    BigInt           @id
+  skill         skills           @relation(fields: [skill_id], references: [id])
+  project       project          @relation(fields: [project_id], references: [id])
+}
+
+model project_game_engines {
+  project_id    BigInt
+  game_engine_id Int             @id
+  project       project          @relation(fields: [project_id], references: [id])
+  game_engine   gaming_engines   @relation(fields: [game_engine_id], references: [id])
+}
+
+model project_moderators {
+  id            BigInt           @id @default(autoincrement())
+  project_id    BigInt
+  status        ProjectModeratorStatusEnum
+  moderator_id  BigInt
+  assigned_by   DateTime         @default(now())
+  project       project          @relation(fields: [project_id], references: [id])
+  moderator     users            @relation(fields: [moderator_id], references: [id])
+}
+
+model proposals {
+  id            BigInt           @id @default(autoincrement())
+  project_id    BigInt
+  status        ProposalStatusEnum
+  updated_at    DateTime         @default(now())
+  estimated_days Int
+  cover_letter  String
+  bid_amount    Int
+  submitted_at  DateTime         @default(now())
+  freelancer_id BigInt
+  project       project          @relation(fields: [project_id], references: [id])
+  freelancer    Freelancer_profile @relation(fields: [freelancer_id], references: [id])
+  proposal_timelines proposal_timelines[]
+  Project_freelancer Project_freelancer[]
+}
+
+model proposal_timelines {
+  id            BigInt           @id @default(autoincrement())
+  description   String
+  estimated_days Int
+  proposal_id   BigInt
+  created_at    DateTime         @default(now())
+  phase_number  PhaseNumberEnum
+  proposal      proposals        @relation(fields: [proposal_id], references: [id])
+}
+
+model Project_freelancer {
+  id            BigInt           @id @default(autoincrement())
+  status        ProjectFreelancerStatusEnum
+  freelancer_id BigInt
+  project_id    BigInt
+  proposal_id   BigInt
+  rating_by_client RatingEnum?
+  review_by_client String?
+  rated_at      DateTime?        @default(now())
+  completed_at  DateTime?        @default(now())
+  assigned_at   DateTime?        @default(now())
+  freelancer    Freelancer_profile @relation(fields: [freelancer_id], references: [id])
+  project       project          @relation(fields: [project_id], references: [id])
+  proposal      proposals        @relation(fields: [proposal_id], references: [id])
+}
+
+model freelancer_stats {
+  id            BigInt           @id @default(autoincrement())
+  freelancer_id BigInt
+  completed_projects_count Int?   @default(0)
+  total_earned  Int              @default(0)
+  average_rating Decimal         @default(0) @db.Decimal(8, 2)
+  created_at    DateTime         @default(now())
+  updated_at    DateTime         @default(now())
+  total_proposals_accepted Int @default(0)
+  total_reviews_count Int   @default(0)
+  total_proposals_sent Int  @default(0)
+  last_project_completed_at DateTime? @default(now())
+  freelancer    Freelancer_profile @relation(fields: [freelancer_id], references: [id])
+}
+
+model conversations {
+  id            Int              @id @default(autoincrement())
+  is_moderated  Boolean          @default(false)
+  project_id    BigInt
+  updated_at    DateTime         @default(now())
+  created_at    DateTime         @default(now())
+  project       project          @relation(fields: [project_id], references: [id])
+  conversation_participants conversation_participants[]
+  messages      messages[]
+}
+
+model conversation_participants {
+  id            BigInt           @id @default(autoincrement())
+  joined_at     DateTime         @default(now())
+  conversation_id Int
+  role          ConversationRoleEnum
+  user_id       BigInt
+  conversation  conversations    @relation(fields: [conversation_id], references: [id])
+  user          users            @relation(fields: [user_id], references: [id])
+}
+
+model messages {
+  id            BigInt           @id @default(autoincrement())
+  is_read       Boolean          @default(false)
+  sent_at       DateTime         @default(now())
+  conversation_id Int
+  has_attachment Boolean
+  sender_id     BigInt
+  message       String
+  conversation  conversations    @relation(fields: [conversation_id], references: [id])
+  sender        users            @relation(fields: [sender_id], references: [id])
+  message_attachment message_attachment[]
+}
+
+model message_attachment {
+  id            BigInt           @id @default(autoincrement())
+  message_id    BigInt
+  attachment_url String
+  uploaded_at   DateTime         @default(now())
+  message       messages         @relation(fields: [message_id], references: [id])
+}
+
+model wallet_transactions {
+  id            BigInt           @id @default(autoincrement())
+  wallet_id     BigInt
+  type          WalletTransactionTypeEnum
+  direction     WalletDirectionEnum
+  amount        Decimal          @db.Decimal(10, 2)
+  created_at    DateTime         @default(now())
+  wallet        wallets          @relation(fields: [wallet_id], references: [id])
+}
+
+model notifications {
+  id            BigInt           @id @default(autoincrement())
+  user_id       BigInt
+  type          NotificationTypeEnum
+  title         String
+  message       String?
+  is_read       Boolean          @default(false)
+  created_at    DateTime         @default(now())
+  user          users            @relation(fields: [user_id], references: [id])
+}
+
+model user_payment_methods {
+  id            BigInt           @id @default(autoincrement())
+  user_id       BigInt
+  provider      PaymentProviderEnum
+  provider_customer_id String
+  provider_payment_method_id String
+  brand         String?
+  last4         String?          @db.Char(4)
+  exp_month     Int?
+  exp_year      Int?
+  is_default    Boolean          @default(false)
+  status        PaymentMethodStatusEnum
+  created_at    DateTime         @default(now())
+  user          users            @relation(fields: [user_id], references: [id])
+}
