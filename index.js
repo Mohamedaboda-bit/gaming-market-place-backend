@@ -1,6 +1,15 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import adminRoute from './routes/admin.js'
+import clientRoute from './routes/client.js'
+import developernRoute from './routes/developer.js'
+import homeRoute from './routes/home.js'
+import messageRoute from './routes/message.js'
+import notificationRoute from './routes/notification.js'
+import paymentRoute from './routes/payment.js'
+import userRoute from './routes/user.js'
+
 import { PrismaClient } from '@prisma/client';
 
 
@@ -20,3 +29,17 @@ app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
 
+
+app.use('/admin',adminRoute)
+app.use('/client',clientRoute)
+app.use('/developer',developernRoute)
+app.use('/home',homeRoute)
+app.use('/message',messageRoute)
+app.use('/notification',notificationRoute)
+app.use('/payment',paymentRoute)
+app.use('/user',userRoute)
+
+
+app.use( (req, res,next) => {
+  next(new Error(`${req.originalUrl} is not found `, 404));
+});

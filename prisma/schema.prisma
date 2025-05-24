@@ -131,7 +131,7 @@ enum NotificationTypeEnum {
 }
 
 enum PaymentProviderEnum {
-  stripe
+  moyasar
   paypal
 }
 
@@ -147,7 +147,7 @@ model users {
   first_name    String
   last_name     String
   phone_number  String
-  email         String
+  email         String @unique
   remember_token String?
   role          RoleEnum
   password      String
