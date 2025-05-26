@@ -14,6 +14,7 @@ import { PrismaClient } from '@prisma/client';
 
 
 const app = express();
+app.use(express.json());
 
 app.use(cors({
     origin: '*', 
@@ -23,7 +24,6 @@ dotenv.config();
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/mydatabase';
 
-app.use(express.json());
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
@@ -42,4 +42,11 @@ app.use('/user',userRoute)
 
 app.use( (req, res,next) => {
   next(new Error(`${req.originalUrl} is not found `, 404));
+});
+
+app.use((err, req, res, next) => {
+  res.status(err.statusCode || 500).json({
+      status: err.status || 'error',
+      message: err.message || 'Internal Server Error',
+  });
 });
