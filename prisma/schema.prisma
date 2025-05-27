@@ -55,7 +55,7 @@ model gaming_engines {
   id                                    Int                                     @id @default(autoincrement())
   engine_name                           String
   freelancer_experienced_gaming_engines freelancer_experienced_gaming_engines[]
-  project_game_engines                  project_game_engines?
+  project_game_engines                  project_game_engines[]
 }
 
 model freelancer_experienced_gaming_engines {
@@ -163,8 +163,7 @@ model escrows {
 model project {
   id                   BigInt                 @id @default(autoincrement())
   description          String
-  title                String
-  budget               Int
+  title                String                 @unique(map: "UNIQUE_title")
   type                 ProjectTypeEnum
   expected_duration    Int
   status               ProjectStatusEnum
@@ -172,30 +171,38 @@ model project {
   created_at           DateTime               @default(now())
   is_moderated         Boolean
   client_id            BigInt
-  platform             String
-  number_of_phases     Int                    @default(1)
+  experience_needed    ExperienceLevelEnum?
+  budget_type          BudgetTypeEnum?
+  min_budget           Int?
+  max_budget           Int?
+  attachment_url       String?
+  number_of_phases     PhaseNumberEnum?
   Project_freelancer   Project_freelancer[]
   conversations        conversations[]
   escrows              escrows[]
   client               users                  @relation("client", fields: [client_id], references: [id])
   project_game_engines project_game_engines[]
   project_moderators   project_moderators[]
-  project_skills       project_skills?
+  project_skills       project_skills[]
   proposals            proposals[]
 }
 
 model project_skills {
   skill_id   Int
-  project_id BigInt  @id
+  project_id BigInt
   project    project @relation(fields: [project_id], references: [id])
   skill      skills  @relation(fields: [skill_id], references: [id])
+
+  @@id([skill_id, project_id], map: "COMP_PK")
 }
 
 model project_game_engines {
   project_id     BigInt
-  game_engine_id Int            @id
+  game_engine_id Int
   game_engine    gaming_engines @relation(fields: [game_engine_id], references: [id])
   project        project        @relation(fields: [project_id], references: [id])
+
+  @@id([game_engine_id, project_id], map: "COMP_PK2")
 }
 
 model project_moderators {
@@ -389,6 +396,9 @@ enum EscrowStatusEnum {
 enum ProjectTypeEnum {
   new_game
   edit_game
+  Game_Asset_Design        @map("Game Asset Design")
+  User_Interface_Design    @map("User Interface Design")
+  Add_features_to_the_game @map("Add features to the game")
 }
 
 enum ProjectStatusEnum {
@@ -473,4 +483,15 @@ enum PaymentMethodStatusEnum {
   pending
   rejected
   accepted
+}
+
+enum BudgetTypeEnum {
+  fixed
+  hourly
+}
+
+enum ExperienceLevelEnum {
+  junior
+  mid
+  senior
 }

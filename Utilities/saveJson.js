@@ -1,18 +1,21 @@
 export const convertBigIntsToStrings = (obj) => {
-  if (Array.isArray(obj)) {
-    return obj.map(convertBigIntsToStrings);
-  } else if (obj !== null && typeof obj === 'object') {
-    const newObj = {};
-    for (const key in obj) {
-      const value = obj[key];
-      if (typeof value === 'bigint') {
-        newObj[key] = value.toString();
-      } else {
-        newObj[key] = convertBigIntsToStrings(value);
-      }
+    if (Array.isArray(obj)) {
+        return obj.map(convertBigIntsAndDatesToStrings);
+    } else if (obj && typeof obj === "object") {
+        const result = {};
+        for (const key in obj) {
+            const value = obj[key];
+            if (typeof value === "bigint") {
+                result[key] = value.toString();
+            } else if (value instanceof Date) {
+                result[key] = value.toISOString();
+            } else if (typeof value === "object" && value !== null) {
+                result[key] = convertBigIntsAndDatesToStrings(value);
+            } else {
+                result[key] = value;
+            }
+        }
+        return result;
     }
-    return newObj;
-  }
-  return obj;
+    return obj;
 }
-
