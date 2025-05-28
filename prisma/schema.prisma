@@ -232,13 +232,14 @@ model proposals {
 }
 
 model proposal_timelines {
-  id             BigInt          @id @default(autoincrement())
+  id             BigInt              @id @default(autoincrement())
   description    String
   estimated_days Int
   proposal_id    BigInt
-  created_at     DateTime        @default(now())
+  created_at     DateTime            @default(now())
   phase_number   PhaseNumberEnum
-  proposal       proposals       @relation(fields: [proposal_id], references: [id])
+  status         ProposalStatusEnum?
+  proposal       proposals           @relation(fields: [proposal_id], references: [id])
 }
 
 model Project_freelancer {
@@ -408,6 +409,7 @@ enum ProjectStatusEnum {
   assigned
   canceled
   withdrawned
+  waiting
 }
 
 enum ProjectModeratorStatusEnum {

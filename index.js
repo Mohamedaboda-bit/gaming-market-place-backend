@@ -50,3 +50,6 @@ app.use((err, req, res, next) => {
       message: err.message || 'Internal Server Error',
   });
 });
+
+
+// note add trigger on payment (after insert) to calclaute (aggregate) total earning into freelancer_stats table ( to use it in developer dashboard) 

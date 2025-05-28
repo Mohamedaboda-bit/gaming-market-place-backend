@@ -38,3 +38,9 @@ export const addSkill =catchAsync(async (req, res, next)=>{
     // should handle project aproveing, canceling, and other actions
 })
 
+
+export const addEngine =catchAsync(async (req, res, next)=>{
+    // should handle project aproveing, canceling, and other actions
+})
+
+

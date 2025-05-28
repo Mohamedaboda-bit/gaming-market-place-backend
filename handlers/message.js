@@ -47,7 +47,7 @@ export const getCanvos = catchAsync(async (req, res, next) => { // / still under
 });
 
 export const getACanvo =catchAsync(async (req, res, next)=>{
-    // logic of getting one Conversation
+    // logic of getting one Conversation and it's messages
 })
 
 export const getAllConversations =catchAsync(async (req, res, next)=>{

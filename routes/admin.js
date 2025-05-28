@@ -1,5 +1,5 @@
 import express from "express"
-import {getWebsiteData,getClients,getFreelancers,getProject,handleProject,addSkill} from "../handlers/admin.js"
+import {getWebsiteData,getClients,getFreelancers,getProject,handleProject,addSkill,addEngine} from "../handlers/admin.js"
 import {getAllConversations} from "../handlers/message.js"
 import {addMod} from "../handlers/user.js"
 import { isAuthenticated, authorizeRoles } from "../middleweres/auth.js"
@@ -14,5 +14,6 @@ router.get('/conversations',getAllConversations)
 router.post('/addMod',isAuthenticated,authorizeRoles(["admin"]),addMod)
 router.post('/project',isAuthenticated,authorizeRoles(["admin"]),handleProject)
 router.post('/skill',isAuthenticated,authorizeRoles(["admin"]),addSkill)
+router.post('/engines',isAuthenticated,authorizeRoles(["admin"]),addEngine)
 
 export default router

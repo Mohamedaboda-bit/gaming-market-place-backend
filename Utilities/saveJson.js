@@ -1,6 +1,6 @@
 export const convertBigIntsToStrings = (obj) => {
     if (Array.isArray(obj)) {
-        return obj.map(convertBigIntsAndDatesToStrings);
+        return obj.map(convertBigIntsToStrings);
     } else if (obj && typeof obj === "object") {
         const result = {};
         for (const key in obj) {
@@ -10,7 +10,7 @@ export const convertBigIntsToStrings = (obj) => {
             } else if (value instanceof Date) {
                 result[key] = value.toISOString();
             } else if (typeof value === "object" && value !== null) {
-                result[key] = convertBigIntsAndDatesToStrings(value);
+                result[key] = convertBigIntsToStrings(value);
             } else {
                 result[key] = value;
             }
