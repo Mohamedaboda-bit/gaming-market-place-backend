@@ -1,9 +1,11 @@
 import express from "express"
-import {getLastTen} from "../handlers/notification.js"
+import {getLastTen,isRead} from "../handlers/notification.js"
+import { isAuthenticated } from "../middleweres/auth.js"
 
 const router = express.Router()
 
-router.get('/:id',getLastTen)
+router.get('/',isAuthenticated,getLastTen)
+router.patch('/:id',isAuthenticated,isRead)
 
 
 export default router

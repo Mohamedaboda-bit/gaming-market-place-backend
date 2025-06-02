@@ -219,5 +219,126 @@ export const getPayments = catchAsync(async (req, res, next) => { // still under
     });
 });
 
+// should handle a proposal and assign the freelancer to the project if accepted
+// and change the status of the proposal if accepted or rejected
+// and the status of the project to assigned if accepted
+// and create an escrow if accepted
+// and send a notification to the freelancer
+
+export const handleProposal = catchAsync(async (req, res, next) => { // update this to handle payment from client to admin ( escrow ) after adding payment system
+    const { proposalId, action } = req.body; // action: 'accept' or 'reject'
+    if (!proposalId || !['accept', 'reject'].includes(action)) {
+        return res.status(400).json({ message: 'proposalId and valid action are required' });
+    }
+
+    const proposal = await prisma.proposals.findUnique({
+        where: { id: BigInt(proposalId) },
+        include: {
+            project: true,
+            freelancer: true
+        }
+    });
+    if (!proposal) return res.status(404).json({ message: 'Proposal not found' });
+
+    // Ensure only the project owner (client) can accept/reject
+    if (BigInt(req.user.id) !== proposal.project.client_id) {
+        return res.status(403).json({ message: "You are not authorized to perform this action." });
+    }
+
+    const userId = proposal.project.client_id;
+    const clientProfile = await prisma.client_profile.findFirst({
+        where: { user_id: userId }
+    });
+    if (!clientProfile) {
+        return res.status(404).json({ message: 'Client profile not found' });
+    }
+
+    const clientProfileId = clientProfile.id;
+    const projectId = proposal.project_id;
+    const freelancerId = proposal.freelancer_id;
+    const bidAmount = proposal.bid_amount;
+
+    if (action === 'reject') {
+        await prisma.proposals.update({
+            where: { id: BigInt(proposalId) },
+            data: { status: 'rejected' }
+        });
+        await prisma.notifications.create({
+            data: {
+                user_id: freelancerId,
+                type: 'proposal_rejected',
+                title: 'Proposal Rejected',
+                message: `Your proposal for project '${proposal.project.title}' was rejected.`
+            }
+        });
+        return res.json({ message: 'Proposal rejected and freelancer notified.' });
+    }
+
+    // Accept logic in a transaction
+    await prisma.$transaction(async (tx) => {
+        // 1. Accept this proposal
+        await tx.proposals.update({
+            where: { id: BigInt(proposalId) },
+            data: { status: 'accepted' }
+        });
+        // 2. Reject all other proposals for this project
+        await tx.proposals.updateMany({
+            where: {
+                project_id: projectId,
+                id: { not: BigInt(proposalId) }
+            },
+            data: { status: 'rejected' }
+        });
+        // 3. Set project status to assigned
+        await tx.project.update({
+            where: { id: projectId },
+            data: { status: 'assigned' }
+        });
+        // 4. Create Project_freelancer
+        await tx.Project_freelancer.create({
+            data: {
+                status: 'in_progress',
+                freelancer_id: freelancerId,
+                project_id: projectId,
+                proposal_id: BigInt(proposalId)
+            }
+        });
+        // 5. Create escrow
+        await tx.escrows.create({ // will be updated later when we have a payment system
+            data: {
+                status: 'pending',
+                project_id: projectId,
+                amount: bidAmount,
+                freelancer_id: freelancerId,
+                client_id: clientProfileId
+            }
+        });
+        // 6. Notify freelancer
+        await tx.notifications.create({
+            data: {
+                user_id: freelancerId,
+                type: 'proposal_accepted',
+                title: 'Proposal Accepted',
+                message: `Your proposal for project '${proposal.project.title}' was accepted!`
+            }
+        });
+    });
+    res.json({ message: 'Proposal accepted, project assigned, escrow created, freelancer notified.' });
+});  
 
 
+export const getProposals = catchAsync(async (req, res, next) => {
+    // should get all the proposels for a project and make sure the client is the owner of the project
+})
+
+export const deleteProject = catchAsync(async (req, res, next) => {
+    // should delete a project by id and make sure the client is the owner of the project
+});
+
+export const editProject = catchAsync(async (req, res, next) => {
+    // should edit a project by id and make sure the client is the owner of the project
+});
+
+export const getOneProject = catchAsync(async (req, res, next) => {
+    // should get a project by id and make sure the client is the owner of the project
+});

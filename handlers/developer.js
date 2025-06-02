@@ -511,6 +511,12 @@ export const apply = catchAsync(async (req, res, next) => {// need more testing
         return res.status(404).json({ message: "Freelancer profile not found" });
     }
 
+    // Check if project is in 'waiting' status
+    const project = await prisma.project.findUnique({ where: { id: BigInt(project_id) } });
+    if (!project || project.status !== 'waiting') {
+        return res.status(400).json({ message: "You can only apply to projects with status 'waiting'." });
+    }
+
     // Check if already applied
     const existingProposal = await prisma.proposals.findFirst({
         where: {
@@ -558,4 +564,12 @@ export const apply = catchAsync(async (req, res, next) => {// need more testing
     });
 });
 
+
+export const deleteProposal = catchAsync(async (req, res, next) => {
+    // should delete a proposal by id and make sure the freelancer is the owner of the proposal
+});
+
+export const editProposal = catchAsync(async (req, res, next) => {
+    // should edit a proposal by id and make sure the freelancer is the owner of the proposal
+});
 

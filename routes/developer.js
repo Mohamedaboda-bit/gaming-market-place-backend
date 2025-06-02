@@ -7,7 +7,9 @@ import {
     ActiveProjects,
     getOneProjects,
     getDetails,
-    apply
+    apply,
+    deleteProposal,
+    editProposal
 } from "../handlers/developer.js"
 import { isAuthenticated, authorizeRoles } from "../middleweres/auth.js"
 
@@ -21,6 +23,7 @@ router.get('/proposals',isAuthenticated,getProposals)
 router.get('/proposals/:id',isAuthenticated,getOneProposal)
 router.get('/details',isAuthenticated,getDetails)
 router.post('/proposals',isAuthenticated,authorizeRoles(["freelancer"]),apply)
-
+router.delete('/proposals',isAuthenticated,authorizeRoles(["freelancer"]),deleteProposal)
+router.patch('/proposals',isAuthenticated,authorizeRoles(["freelancer"]),editProposal)
 
 export default router

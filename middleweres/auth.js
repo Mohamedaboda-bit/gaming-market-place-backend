@@ -8,7 +8,7 @@ export const isAuthenticated = catchAsync(async (req, res, next) => {
     }
         const decoded = jwt.verify(authHeader, process.env.JWT_SECRET);
 
-        req.user = { id: decoded.id };
+        req.user = { id: decoded.id , role: decoded.role};
 
         next();
 });
