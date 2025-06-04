@@ -1,0 +1,238 @@
+{
+  "item": [
+    {
+      "id": "4884ab2e-1763-4caf-8c7f-3e481e401aad",
+      "name": "Retrieve Issuer",
+      "request": {
+        "name": "Retrieve Issuer",
+        "description": {},
+        "url": {
+          "path": ["source", "issuer"],
+          "host": ["{{baseUrl}}"],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"source\": {\n    \"type\": \"creditcard\",\n    \"number\": {\n      \"value\": \"reference ./common/types.yaml#/components/schemas/PanNumber not found in the OpenAPI spec\"\n    }\n  }\n}",
+          "options": {
+            "raw": {
+              "headerFamily": "json",
+              "language": "json"
+            }
+          }
+        },
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "5e064c83-b8f1-4b10-a6c2-5f40d45be7f2",
+          "name": "Successful operation",
+          "originalRequest": {
+            "url": {
+              "path": ["source", "issuer"],
+              "host": ["{{baseUrl}}"],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"source\": {\n    \"type\": \"creditcard\",\n    \"number\": {\n      \"value\": \"reference ./common/types.yaml#/components/schemas/PanNumber not found in the OpenAPI spec\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"issuer_name\": \"<string>\",\n  \"issuer_country\": \"<string>\",\n  \"issuer_card_type\": {\n    \"value\": \"reference ./common/types.yaml#/components/schemas/IssuerCardType not found in the OpenAPI spec\"\n  },\n  \"issuer_card_category\": {\n    \"value\": \"reference ./common/types.yaml#/components/schemas/IssuerCardCategory not found in the OpenAPI spec\"\n  },\n  \"first_digits\": \"<string>\",\n  \"last_digits\": \"<string>\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "f1803d67-5e5a-40f9-927f-f46f617cbda6",
+          "name": "Business Error or validation error.",
+          "originalRequest": {
+            "url": {
+              "path": ["source", "issuer"],
+              "host": ["{{baseUrl}}"],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"source\": {\n    \"type\": \"creditcard\",\n    \"number\": {\n      \"value\": \"reference ./common/types.yaml#/components/schemas/PanNumber not found in the OpenAPI spec\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"value\": \"reference ./common/types.yaml#/components/schemas/ApiBusinessError not found in the OpenAPI spec\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "72d8d68c-84f8-4aac-a604-ff74d3802b17",
+          "name": "Invalid authorization credentials",
+          "originalRequest": {
+            "url": {
+              "path": ["source", "issuer"],
+              "host": ["{{baseUrl}}"],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"source\": {\n    \"type\": \"creditcard\",\n    \"number\": {\n      \"value\": \"reference ./common/types.yaml#/components/schemas/PanNumber not found in the OpenAPI spec\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"value\": \"reference ./common/types.yaml#/components/schemas/ApiAuthenticationError not found in the OpenAPI spec\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "16109714-87ce-4bd4-8d4f-443f026804a5",
+          "name": "Invalid authorization credentials",
+          "originalRequest": {
+            "url": {
+              "path": ["source", "issuer"],
+              "host": ["{{baseUrl}}"],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"source\": {\n    \"type\": \"creditcard\",\n    \"number\": {\n      \"value\": \"reference ./common/types.yaml#/components/schemas/PanNumber not found in the OpenAPI spec\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Forbidden",
+          "code": 403,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"value\": \"reference ./common/types.yaml#/components/schemas/ApiAuthorizationError not found in the OpenAPI spec\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.moyasar.com/v1"
+    }
+  ],
+  "info": {
+    "_postman_id": "6a58142a-64f2-4a73-965a-2bb1bf5b4b1d",
+    "name": "Moyasar Sources API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

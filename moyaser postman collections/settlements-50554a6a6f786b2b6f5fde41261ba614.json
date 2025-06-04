@@ -1,0 +1,668 @@
+{
+  "item": [
+    {
+      "id": "b3584b70-602f-4d77-bee7-0750e0611074",
+      "name": "List Settlements",
+      "request": {
+        "name": "List Settlements",
+        "description": {},
+        "url": {
+          "path": ["settlements"],
+          "host": ["{{baseUrl}}"],
+          "query": [
+            {
+              "disabled": false,
+              "description": {
+                "content": "Page to list",
+                "type": "text/plain"
+              },
+              "key": "page",
+              "value": "1"
+            },
+            {
+              "disabled": false,
+              "description": {
+                "content": "Settlement ID to look for",
+                "type": "text/plain"
+              },
+              "key": "id",
+              "value": "<uuid>"
+            },
+            {
+              "disabled": false,
+              "description": {
+                "content": "Filter settlements created on a date equal or greater than a give date",
+                "type": "text/plain"
+              },
+              "key": "created[gt]",
+              "value": "<string>"
+            },
+            {
+              "disabled": false,
+              "description": {
+                "content": "Filter settlements created on a date equal or less than a give date",
+                "type": "text/plain"
+              },
+              "key": "created[lt]",
+              "value": "<string>"
+            }
+          ],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "body": {},
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "009976ae-4df8-4309-8ad4-48023bb087e3",
+          "name": "Successful operation",
+          "originalRequest": {
+            "url": {
+              "path": ["settlements"],
+              "host": ["{{baseUrl}}"],
+              "query": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "Page to list",
+                    "type": "text/plain"
+                  },
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "Settlement ID to look for",
+                    "type": "text/plain"
+                  },
+                  "key": "id",
+                  "value": "<uuid>"
+                },
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "Filter settlements created on a date equal or greater than a give date",
+                    "type": "text/plain"
+                  },
+                  "key": "created[gt]",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "Filter settlements created on a date equal or less than a give date",
+                    "type": "text/plain"
+                  },
+                  "key": "created[lt]",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"settlements\": [\n    {\n      \"id\": \"<uuid>\",\n      \"recipient_type\": \"Platform\",\n      \"recipient_id\": \"<uuid>\",\n      \"currency\": {\n        \"value\": \"reference ./common/types.yaml#/components/schemas/Currency not found in the OpenAPI spec\"\n      },\n      \"amount\": \"<integer>\",\n      \"fee\": \"<integer>\",\n      \"tax\": \"<integer>\",\n      \"reference\": \"<string>\",\n      \"settlement_count\": \"<integer>\",\n      \"invoice_url\": \"<uri>\",\n      \"csv_list_url\": \"<uri>\",\n      \"pdf_list_url\": \"<uri>\",\n      \"created_at\": \"<string>\"\n    },\n    {\n      \"id\": \"<uuid>\",\n      \"recipient_type\": \"Entity\",\n      \"recipient_id\": \"<uuid>\",\n      \"currency\": {\n        \"value\": \"reference ./common/types.yaml#/components/schemas/Currency not found in the OpenAPI spec\"\n      },\n      \"amount\": \"<integer>\",\n      \"fee\": \"<integer>\",\n      \"tax\": \"<integer>\",\n      \"reference\": \"<string>\",\n      \"settlement_count\": \"<integer>\",\n      \"invoice_url\": \"<uri>\",\n      \"csv_list_url\": \"<uri>\",\n      \"pdf_list_url\": \"<uri>\",\n      \"created_at\": \"<string>\"\n    }\n  ],\n  \"meta\": {\n    \"value\": \"reference ./common/types.yaml#/components/schemas/ListMeta not found in the OpenAPI spec\"\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "509c5a7a-bcc8-42e5-bf8e-c3ac44bac111",
+          "name": "Invalid authorization credentials",
+          "originalRequest": {
+            "url": {
+              "path": ["settlements"],
+              "host": ["{{baseUrl}}"],
+              "query": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "Page to list",
+                    "type": "text/plain"
+                  },
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "Settlement ID to look for",
+                    "type": "text/plain"
+                  },
+                  "key": "id",
+                  "value": "<uuid>"
+                },
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "Filter settlements created on a date equal or greater than a give date",
+                    "type": "text/plain"
+                  },
+                  "key": "created[gt]",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "Filter settlements created on a date equal or less than a give date",
+                    "type": "text/plain"
+                  },
+                  "key": "created[lt]",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"value\": \"reference ./common/types.yaml#/components/schemas/ApiAuthenticationError not found in the OpenAPI spec\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "41828b40-5fc8-445e-847f-2b677fcaa363",
+          "name": "Invalid authorization credentials",
+          "originalRequest": {
+            "url": {
+              "path": ["settlements"],
+              "host": ["{{baseUrl}}"],
+              "query": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "Page to list",
+                    "type": "text/plain"
+                  },
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "Settlement ID to look for",
+                    "type": "text/plain"
+                  },
+                  "key": "id",
+                  "value": "<uuid>"
+                },
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "Filter settlements created on a date equal or greater than a give date",
+                    "type": "text/plain"
+                  },
+                  "key": "created[gt]",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "Filter settlements created on a date equal or less than a give date",
+                    "type": "text/plain"
+                  },
+                  "key": "created[lt]",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "Forbidden",
+          "code": 403,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"value\": \"reference ./common/types.yaml#/components/schemas/ApiAuthorizationError not found in the OpenAPI spec\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "451107d2-a376-48e8-a272-512def8e0727",
+      "name": "Fetch Settlement",
+      "request": {
+        "name": "Fetch Settlement",
+        "description": {},
+        "url": {
+          "path": ["settlements", ":id"],
+          "host": ["{{baseUrl}}"],
+          "query": [],
+          "variable": [
+            {
+              "type": "any",
+              "value": "<uuid>",
+              "key": "id",
+              "disabled": false,
+              "description": {
+                "content": "(Required) ID of the settlement to fetch",
+                "type": "text/plain"
+              }
+            }
+          ]
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "body": {},
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "57259c53-d92a-4fe1-959f-dccd70ccbee5",
+          "name": "Successful operation",
+          "originalRequest": {
+            "url": {
+              "path": ["settlements", ":id"],
+              "host": ["{{baseUrl}}"],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"id\": \"<uuid>\",\n  \"recipient_type\": \"Platform\",\n  \"recipient_id\": \"<uuid>\",\n  \"currency\": {\n    \"value\": \"reference ./common/types.yaml#/components/schemas/Currency not found in the OpenAPI spec\"\n  },\n  \"amount\": \"<integer>\",\n  \"fee\": \"<integer>\",\n  \"tax\": \"<integer>\",\n  \"reference\": \"<string>\",\n  \"settlement_count\": \"<integer>\",\n  \"invoice_url\": \"<uri>\",\n  \"csv_list_url\": \"<uri>\",\n  \"pdf_list_url\": \"<uri>\",\n  \"created_at\": \"<string>\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "960ff291-64b6-47a5-abb9-22b4fc975355",
+          "name": "Invalid authorization credentials",
+          "originalRequest": {
+            "url": {
+              "path": ["settlements", ":id"],
+              "host": ["{{baseUrl}}"],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"value\": \"reference ./common/types.yaml#/components/schemas/ApiAuthenticationError not found in the OpenAPI spec\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "7d83038c-ee80-4825-84e6-fe27102b75f4",
+          "name": "Invalid authorization credentials",
+          "originalRequest": {
+            "url": {
+              "path": ["settlements", ":id"],
+              "host": ["{{baseUrl}}"],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "Forbidden",
+          "code": 403,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"value\": \"reference ./common/types.yaml#/components/schemas/ApiAuthorizationError not found in the OpenAPI spec\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "aba889db-c373-4fc2-8565-5a9027b7af6b",
+          "name": "Invalid authorization credentials",
+          "originalRequest": {
+            "url": {
+              "path": ["settlements", ":id"],
+              "host": ["{{baseUrl}}"],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"value\": \"reference ./common/types.yaml#/components/schemas/ApiNotFoundError not found in the OpenAPI spec\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "adbb2b90-ce24-4a99-9ec8-2646b7455b14",
+      "name": "List Settlement Lines",
+      "request": {
+        "name": "List Settlement Lines",
+        "description": {},
+        "url": {
+          "path": ["settlements", ":id", "lines"],
+          "host": ["{{baseUrl}}"],
+          "query": [
+            {
+              "disabled": false,
+              "description": {
+                "content": "Page to list",
+                "type": "text/plain"
+              },
+              "key": "page",
+              "value": "1"
+            }
+          ],
+          "variable": [
+            {
+              "type": "any",
+              "value": "<uuid>",
+              "key": "id",
+              "disabled": false,
+              "description": {
+                "content": "(Required) ID of the settlement to list lines for",
+                "type": "text/plain"
+              }
+            }
+          ]
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "body": {},
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "9c9ec881-384e-4c12-a561-279826c4fdc6",
+          "name": "Successful operation",
+          "originalRequest": {
+            "url": {
+              "path": ["settlements", ":id", "lines"],
+              "host": ["{{baseUrl}}"],
+              "query": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "Page to list",
+                    "type": "text/plain"
+                  },
+                  "key": "page",
+                  "value": "1"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"lines\": [\n    {\n      \"payment_id\": \"<uuid>\",\n      \"type\": \"installment\",\n      \"currency\": {\n        \"value\": \"reference ./common/types.yaml#/components/schemas/Currency not found in the OpenAPI spec\"\n      },\n      \"payment_amount\": \"<integer>\",\n      \"amount\": \"<integer>\",\n      \"fee\": \"<integer>\",\n      \"tax\": \"<integer>\",\n      \"reference_number\": {\n        \"value\": \"reference ./common/types.yaml#/components/schemas/RetrievalReferenceNumber not found in the OpenAPI spec\"\n      },\n      \"authorization_code\": {\n        \"value\": \"reference ./common/types.yaml#/components/schemas/AuthorizationCode not found in the OpenAPI spec\"\n      },\n      \"ip\": \"<ipv4>\",\n      \"transacted_at\": \"<string>\",\n      \"splits\": \"<array>\",\n      \"custom_splits\": \"<array>\",\n      \"source\": {\n        \"type\": \"creditcard\",\n        \"company\": {\n          \"value\": \"reference ./common/types.yaml#/components/schemas/Company not found in the OpenAPI spec\"\n        },\n        \"name\": \"<string>\",\n        \"number\": {\n          \"value\": \"reference ./common/types.yaml#/components/schemas/MaskedPanNumber not found in the OpenAPI spec\"\n        },\n        \"issuer_name\": \"<string>\",\n        \"issuer_country\": \"<string>\",\n        \"issuer_card_type\": {\n          \"value\": \"reference ./common/types.yaml#/components/schemas/IssuerCardType not found in the OpenAPI spec\"\n        },\n        \"issuer_card_category\": {\n          \"value\": \"reference ./common/types.yaml#/components/schemas/IssuerCardCategory not found in the OpenAPI spec\"\n        }\n      },\n      \"metadata\": {\n        \"value\": \"reference ./common/types.yaml#/components/schemas/Metadata not found in the OpenAPI spec\"\n      }\n    },\n    {\n      \"payment_id\": \"<uuid>\",\n      \"type\": \"refund\",\n      \"currency\": {\n        \"value\": \"reference ./common/types.yaml#/components/schemas/Currency not found in the OpenAPI spec\"\n      },\n      \"payment_amount\": \"<integer>\",\n      \"amount\": \"<integer>\",\n      \"fee\": \"<integer>\",\n      \"tax\": \"<integer>\",\n      \"reference_number\": {\n        \"value\": \"reference ./common/types.yaml#/components/schemas/RetrievalReferenceNumber not found in the OpenAPI spec\"\n      },\n      \"authorization_code\": {\n        \"value\": \"reference ./common/types.yaml#/components/schemas/AuthorizationCode not found in the OpenAPI spec\"\n      },\n      \"ip\": \"<ipv4>\",\n      \"transacted_at\": \"<string>\",\n      \"splits\": \"<array>\",\n      \"custom_splits\": \"<array>\",\n      \"source\": {\n        \"type\": \"creditcard\",\n        \"company\": {\n          \"value\": \"reference ./common/types.yaml#/components/schemas/Company not found in the OpenAPI spec\"\n        },\n        \"name\": \"<string>\",\n        \"number\": {\n          \"value\": \"reference ./common/types.yaml#/components/schemas/MaskedPanNumber not found in the OpenAPI spec\"\n        },\n        \"issuer_name\": \"<string>\",\n        \"issuer_country\": \"<string>\",\n        \"issuer_card_type\": {\n          \"value\": \"reference ./common/types.yaml#/components/schemas/IssuerCardType not found in the OpenAPI spec\"\n        },\n        \"issuer_card_category\": {\n          \"value\": \"reference ./common/types.yaml#/components/schemas/IssuerCardCategory not found in the OpenAPI spec\"\n        }\n      },\n      \"metadata\": {\n        \"value\": \"reference ./common/types.yaml#/components/schemas/Metadata not found in the OpenAPI spec\"\n      }\n    }\n  ],\n  \"meta\": {\n    \"value\": \"reference ./common/types.yaml#/components/schemas/ListMeta not found in the OpenAPI spec\"\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "6f57f08f-5d7c-4ea7-8a8f-4a1b4ed0aa5e",
+          "name": "Invalid authorization credentials",
+          "originalRequest": {
+            "url": {
+              "path": ["settlements", ":id", "lines"],
+              "host": ["{{baseUrl}}"],
+              "query": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "Page to list",
+                    "type": "text/plain"
+                  },
+                  "key": "page",
+                  "value": "1"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"value\": \"reference ./common/types.yaml#/components/schemas/ApiAuthenticationError not found in the OpenAPI spec\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "9877785b-aab4-4a00-a69d-9c6b8ee30b0f",
+          "name": "Invalid authorization credentials",
+          "originalRequest": {
+            "url": {
+              "path": ["settlements", ":id", "lines"],
+              "host": ["{{baseUrl}}"],
+              "query": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "Page to list",
+                    "type": "text/plain"
+                  },
+                  "key": "page",
+                  "value": "1"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "Forbidden",
+          "code": 403,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"value\": \"reference ./common/types.yaml#/components/schemas/ApiAuthorizationError not found in the OpenAPI spec\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "53c805c7-63c1-4e3c-8105-3970d04c5a89",
+          "name": "Invalid authorization credentials",
+          "originalRequest": {
+            "url": {
+              "path": ["settlements", ":id", "lines"],
+              "host": ["{{baseUrl}}"],
+              "query": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "Page to list",
+                    "type": "text/plain"
+                  },
+                  "key": "page",
+                  "value": "1"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"value\": \"reference ./common/types.yaml#/components/schemas/ApiNotFoundError not found in the OpenAPI spec\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.moyasar.com/v1"
+    }
+  ],
+  "info": {
+    "_postman_id": "1bbe06c3-ab02-420f-85b6-b2a3a864c7f8",
+    "name": "Moyasar Settlements API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

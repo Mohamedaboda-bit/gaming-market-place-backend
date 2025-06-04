@@ -81,14 +81,14 @@ export const register = catchAsync(async (req, res, next) => {
         // If freelancer, create profile and connect engines
         if (usertype === "freelancer") {
             const freelancerProfile = await tx.freelancer_profile.create({
-                data: {
+                data: { // add valdtion to set max value of experience_years max 50
                     user_id: user.id,
                     experience_years: Number(yearsOfExperience),
                     available: true
                 }
             });
 
-            for (const engineId of experiencedEngines) {
+            for (const engineId of experiencedEngines) {  
                 await tx.freelancer_experienced_gaming_engines.create({
                     data: {
                         freelancer_id: freelancerProfile.id,

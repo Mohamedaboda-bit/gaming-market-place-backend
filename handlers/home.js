@@ -92,3 +92,8 @@ export const TOP3 = catchAsync( async (req, res) => {  // edit to send proposels
 });
   
   
+export const getSkills = catchAsync(async (req, res) => {
+    const skills = await prisma.skills.findMany()
+    res.status(200).json({ status: 'success', data: skills })
+})
+
